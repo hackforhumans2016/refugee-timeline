@@ -27,10 +27,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <TextView
+    <WebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="&lt; Description Text >"
         android:id="@+id/taskdetails_description" />
 </LinearLayout>

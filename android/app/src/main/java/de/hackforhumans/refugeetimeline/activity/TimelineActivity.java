@@ -26,6 +26,6 @@ public class TimelineActivity extends AppCompatActivity {
         super.onStart();
 
         this.timelineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        this.timelineRecyclerView.setAdapter(new TimelineAdapter());
+        this.timelineRecyclerView.setAdapter(new TimelineAdapter(12));
     }
 }

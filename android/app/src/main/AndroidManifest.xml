@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.hackforhumans.refugeetimeline">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
+        android:name=".RefugeeTimeline"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,9 +14,11 @@
         <activity
             android:name=".activity.TimelineActivity"
             android:exported="true" />
-        <activity android:name=".activity.TaskDetailsActivity"
+        <activity
+            android:name=".activity.TaskDetailsActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.GoalChooserActivity"></activity>
     </application>
 
 </manifest>

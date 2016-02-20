@@ -31,7 +31,10 @@ public class TimelineViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void show(MockTask task) {
-        this.contentNameView.setText(task.getName());
-        this.contentWhenView.setText(task.getTime());
+        show(task.getTime(), task.getName());
+    }
+    public void show(String when, String name) {
+        this.contentNameView.setText(name);
+        this.contentWhenView.setText(when);
     }
 }

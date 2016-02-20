@@ -1,7 +1,14 @@
 package de.hackforhumans.refugeetimeline.de.hackforhumans.refugeetimeline.adapter;
 
 import android.app.Service;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.CursorJoiner;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQuery;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +16,15 @@ import android.view.ViewGroup;
 
 import com.vipul.hp_hp.timelineview.TimelineView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import de.hackforhumans.refugeetimeline.MockTask;
 import de.hackforhumans.refugeetimeline.R;
+import de.hackforhumans.refugeetimeline.Task;
+import de.hackforhumans.refugeetimeline.TaskGraphContract;
+import de.hackforhumans.refugeetimeline.TaskTools;
 import de.hackforhumans.refugeetimeline.activity.TaskDetailsActivity;
 
 /**
@@ -18,11 +32,33 @@ import de.hackforhumans.refugeetimeline.activity.TaskDetailsActivity;
  */
 public class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
 
-    private MockTask[] tasks = new MockTask[] {
-            new MockTask("Task 1", "This is an example task", "now"),
-            new MockTask("Task 2", "This is a dependend task", "tomorrow"),
-            new MockTask("Goal", "The goal we want to reach", "sometime")
-    };
+    private ArrayList<Task> timeline;
+    private SimpleDateFormat dateFormat;
+
+    public TimelineAdapter(Task goal) {
+        timeline = new ArrayList<Task>();
+
+        Task task = goal;
+        timeline.add(goal);
+        while (task.getPredecessorID() != -1) {
+            task = TaskTools.loadFromDB(task.getPredecessorID());
+            timeline.add(0, task);
+        }
+        Task predec = null;
+        for (Task t : timeline) {
+            if (predec != null) {
+                t.calcDate(predec.getDate());
+            } else {
+                t.setDate(new Date());
+            }
+            predec = t;
+        }
+
+        dateFormat = new SimpleDateFormat("EEE, dd.MM.yyyy");
+    }
+    public TimelineAdapter(int goalId) {
+        this(TaskTools.loadFromDB(goalId));
+    }
 
     @Override
     public TimelineViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,15 +71,13 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
 
     @Override
     public void onBindViewHolder(final TimelineViewHolder holder, int position) {
-        // TODO insert data from database
-
-        final MockTask task = tasks[position];
-        holder.show(task);
+        final Task task = timeline.get(position);
+        holder.show(dateFormat.format(task.getDate()), task.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent detailsIntent = new Intent(holder.itemView.getContext(), TaskDetailsActivity.class);
-                TaskDetailsActivity.buildIntent(detailsIntent, task);
+                TaskDetailsActivity.buildIntent(detailsIntent, task.getID());
 
                 holder.itemView.getContext().startActivity(detailsIntent);
             }
@@ -52,8 +86,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
 
     @Override
     public int getItemCount() {
-        // TODO insert data from database
-        return tasks.length;
+        return timeline.size();
     }
 
     @Override
