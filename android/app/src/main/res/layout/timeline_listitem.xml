@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/timeline-listitem-root">
+
+    <com.vipul.hp_hp.timelineview.TimelineView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeline-listitem-timelineView"
+        android:layout_gravity="center_vertical" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeline-listitem-contentLayout"
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="&lt; When >"
+            android:id="@+id/timeline-listitem-contentWhen" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="&lt; Name >"
+            android:id="@+id/timeline-listitem-contentName"
+            android:layout_marginLeft="10dp" />
+
+    </LinearLayout>
+</LinearLayout>
