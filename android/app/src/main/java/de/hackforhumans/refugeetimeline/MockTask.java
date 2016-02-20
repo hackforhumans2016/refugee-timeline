@@ -1,9 +1,12 @@
 package de.hackforhumans.refugeetimeline;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by jan-niklas on 20.02.16.
  */
-public class MockTask {
+public class MockTask implements Parcelable {
 
     private String name;
     private String desc;
@@ -23,5 +26,30 @@ public class MockTask {
     }
     public String getTime() {
         return time;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(desc);
+        dest.writeString(time);
+    }
+
+    public static final Parcelable.Creator<MockTask> CREATOR = new Parcelable.Creator<MockTask>() {
+        @Override
+        public MockTask createFromParcel(Parcel source) {
+            MockTask task = new MockTask(source.readString(), source.readString(), source.readString());
+            return task;
+        }
+
+        @Override
+        public MockTask[] newArray(int size) {
+            return new MockTask[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

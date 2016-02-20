@@ -1,6 +1,7 @@
 package de.hackforhumans.refugeetimeline.de.hackforhumans.refugeetimeline.adapter;
 
 import android.app.Service;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.vipul.hp_hp.timelineview.TimelineView;
 
 import de.hackforhumans.refugeetimeline.MockTask;
 import de.hackforhumans.refugeetimeline.R;
+import de.hackforhumans.refugeetimeline.activity.TaskDetailsActivity;
 
 /**
  * Created by jan-niklas on 20.02.16.
@@ -32,9 +34,20 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(TimelineViewHolder holder, int position) {
+    public void onBindViewHolder(final TimelineViewHolder holder, int position) {
         // TODO insert data from database
-        holder.show(tasks[position]);
+
+        final MockTask task = tasks[position];
+        holder.show(task);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailsIntent = new Intent(holder.itemView.getContext(), TaskDetailsActivity.class);
+                TaskDetailsActivity.buildIntent(detailsIntent, task);
+
+                holder.itemView.getContext().startActivity(detailsIntent);
+            }
+        });
     }
 
     @Override

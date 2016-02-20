@@ -16,30 +16,18 @@ import de.hackforhumans.refugeetimeline.R;
  */
 public class TimelineViewHolder extends RecyclerView.ViewHolder {
 
-    private TimelineView tView;
-    private TextView contentNameView;
-    private TextView contentWhenView;
+    public TimelineView timelineView;
+    public TextView contentNameView;
+    public TextView contentWhenView;
 
     public TimelineViewHolder(View view, int viewType) {
         super(view);
-        this.tView = (TimelineView) view.findViewById(R.id.timeline_listitem_timelineView);
+        this.timelineView = (TimelineView) view.findViewById(R.id.timeline_listitem_timelineView);
         this.contentNameView = (TextView) view.findViewById(R.id.timeline_listitem_contentName);
         this.contentWhenView = (TextView) view.findViewById(R.id.timeline_listitem_contentWhen);
 
         System.out.println(viewType);
-        tView.initLine(viewType);
-    }
-
-    public TimelineView getTimelineView() {
-        return this.tView;
-    }
-
-    public TextView getNameView() {
-        return contentNameView;
-    }
-
-    public TextView getDescriptionView() {
-        return contentWhenView;
+        timelineView.initLine(viewType);
     }
 
     public void show(MockTask task) {
