@@ -8,6 +8,7 @@ import com.vipul.hp_hp.timelineview.TimelineView;
 
 import org.w3c.dom.Text;
 
+import de.hackforhumans.refugeetimeline.MockTask;
 import de.hackforhumans.refugeetimeline.R;
 
 /**
@@ -25,6 +26,7 @@ public class TimelineViewHolder extends RecyclerView.ViewHolder {
         this.contentNameView = (TextView) view.findViewById(R.id.timeline_listitem_contentName);
         this.contentWhenView = (TextView) view.findViewById(R.id.timeline_listitem_contentWhen);
 
+        System.out.println(viewType);
         tView.initLine(viewType);
     }
 
@@ -38,5 +40,10 @@ public class TimelineViewHolder extends RecyclerView.ViewHolder {
 
     public TextView getDescriptionView() {
         return contentWhenView;
+    }
+
+    public void show(MockTask task) {
+        this.contentNameView.setText(task.getName());
+        this.contentWhenView.setText(task.getTime());
     }
 }

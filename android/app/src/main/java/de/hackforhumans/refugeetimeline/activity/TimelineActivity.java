@@ -2,9 +2,11 @@ package de.hackforhumans.refugeetimeline.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import de.hackforhumans.refugeetimeline.R;
+import de.hackforhumans.refugeetimeline.de.hackforhumans.refugeetimeline.adapter.TimelineAdapter;
 
 public class TimelineActivity extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class TimelineActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
-
+        this.timelineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        this.timelineRecyclerView.setAdapter(new TimelineAdapter());
     }
 }

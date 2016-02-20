@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/timeline-listitem-root">
+    android:id="@+id/timeline_listitem_root">
 
     <com.vipul.hp_hp.timelineview.TimelineView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/timeline-listitem-timelineView"
-        android:layout_gravity="center_vertical" />
+        android:layout_height="match_parent"
+        android:id="@+id/timeline_listitem_timelineView"
+        android:layout_gravity="center_vertical"
+        app:line_size="2dp"
+        app:line="@color/colorPrimaryDark"
+        app:marker_size="30dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/timeline-listitem-contentLayout"
+        android:id="@+id/timeline_listitem_contentLayout"
         android:layout_gravity="bottom"
         android:layout_margin="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="&lt; When >"
-            android:id="@+id/timeline-listitem-contentWhen" />
+            android:id="@+id/timeline_listitem_contentWhen"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="&lt; Name >"
-            android:id="@+id/timeline-listitem-contentName"
+            android:id="@+id/timeline_listitem_contentName"
             android:layout_marginLeft="10dp" />
 
     </LinearLayout>
