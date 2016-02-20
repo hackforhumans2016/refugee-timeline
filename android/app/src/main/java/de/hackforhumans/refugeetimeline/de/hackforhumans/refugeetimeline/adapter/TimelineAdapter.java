@@ -1,14 +1,7 @@
 package de.hackforhumans.refugeetimeline.de.hackforhumans.refugeetimeline.adapter;
 
 import android.app.Service;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.CursorJoiner;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQuery;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import de.hackforhumans.refugeetimeline.MockTask;
 import de.hackforhumans.refugeetimeline.R;
-import de.hackforhumans.refugeetimeline.Task;
-import de.hackforhumans.refugeetimeline.TaskGraphContract;
-import de.hackforhumans.refugeetimeline.TaskTools;
+import de.hackforhumans.refugeetimeline.model.Task;
+import de.hackforhumans.refugeetimeline.model.TaskTools;
 import de.hackforhumans.refugeetimeline.activity.TaskDetailsActivity;
 
 /**

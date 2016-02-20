@@ -1,12 +1,5 @@
-package de.hackforhumans.refugeetimeline;
+package de.hackforhumans.refugeetimeline.model;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.SortedSet;

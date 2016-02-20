@@ -18,7 +18,8 @@
             android:name=".activity.TaskDetailsActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.GoalChooserActivity"></activity>
+        <activity android:name=".activity.GoalChooserActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

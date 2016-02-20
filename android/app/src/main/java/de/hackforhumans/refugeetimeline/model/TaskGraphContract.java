@@ -1,4 +1,4 @@
-package de.hackforhumans.refugeetimeline;
+package de.hackforhumans.refugeetimeline.model;
 
 /**
  * Created by jan-niklas on 20.02.16.
@@ -44,6 +44,17 @@ public class TaskGraphContract {
         public String _ID = ID;
         public String _NAME = "task_date";
     }
+
+    public interface Goal {
+        public String ID = "id";
+        public String Name = "name";
+        public String TaskRef = "task_id";
+
+        public String _ID = ID;
+        public String _NAME = "goal";
+    }
+
+
 
     public static String getQN(String tableName, String column) {
         return tableName + "." + column;

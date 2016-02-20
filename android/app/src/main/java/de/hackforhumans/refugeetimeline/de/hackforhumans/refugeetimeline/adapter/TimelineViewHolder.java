@@ -6,9 +6,6 @@ import android.widget.TextView;
 
 import com.vipul.hp_hp.timelineview.TimelineView;
 
-import org.w3c.dom.Text;
-
-import de.hackforhumans.refugeetimeline.MockTask;
 import de.hackforhumans.refugeetimeline.R;
 
 /**
@@ -30,9 +27,6 @@ public class TimelineViewHolder extends RecyclerView.ViewHolder {
         timelineView.initLine(viewType);
     }
 
-    public void show(MockTask task) {
-        show(task.getTime(), task.getName());
-    }
     public void show(String when, String name) {
         this.contentNameView.setText(name);
         this.contentWhenView.setText(when);

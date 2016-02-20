@@ -7,10 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import de.hackforhumans.refugeetimeline.MockTask;
 import de.hackforhumans.refugeetimeline.R;
-import de.hackforhumans.refugeetimeline.Task;
-import de.hackforhumans.refugeetimeline.TaskTools;
+import de.hackforhumans.refugeetimeline.model.Task;
+import de.hackforhumans.refugeetimeline.model.TaskTools;
 
 public class TaskDetailsActivity extends AppCompatActivity {
 

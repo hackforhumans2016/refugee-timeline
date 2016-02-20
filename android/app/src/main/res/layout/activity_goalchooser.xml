@@ -4,16 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="de.hackforhumans.refugeetimeline.activity.GoalChooserActivity">
+    tools:context="de.hackforhumans.refugeetimeline.activity.GoalChooserActivity"
+    android:id="@+id/goalchooser_root">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width=""
-            android:layout_height="" />
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:title="Choose your Goal!"
+            android:id="@+id/goalchooser_toolbar" />
 
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/goalchooser_goals"/>
 
 </LinearLayout>

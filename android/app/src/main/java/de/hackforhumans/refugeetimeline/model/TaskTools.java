@@ -1,4 +1,4 @@
-package de.hackforhumans.refugeetimeline;
+package de.hackforhumans.refugeetimeline.model;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +10,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import de.hackforhumans.refugeetimeline.RefugeeTimeline;
+import de.hackforhumans.refugeetimeline.model.Goal;
 
 /**
  * Created by jan-niklas on 20.02.16.
@@ -67,6 +70,35 @@ public class TaskTools {
 
         return new Task(id, name, desc, predecessor, duration, fixedDates);
     }
+
+    public static ArrayList<Goal> loadGoalsFromDB() {
+
+        ArrayList<Goal> goals = new ArrayList<Goal>();
+        Cursor timePointC = RefugeeTimeline.getInstance().getTimelineDB().query(
+                TaskGraphContract.Goal._NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        while (!timePointC.isLast() && timePointC.getCount() != 0) {
+            timePointC.moveToNext();
+            try {
+                int id = timePointC.getInt(timePointC.getColumnIndex(TaskGraphContract.Goal.ID));
+                String name = timePointC.getString(timePointC.getColumnIndex(TaskGraphContract.Goal.Name));
+                int refer = timePointC.getInt(timePointC.getColumnIndex(TaskGraphContract.Goal.TaskRef));
+
+                goals.add(new Goal(id,name,refer));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return goals;
+    }
+
 
 
 }
