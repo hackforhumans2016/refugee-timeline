@@ -14,6 +14,8 @@ import de.hackforhumans.refugeetimeline.de.hackforhumans.refugeetimeline.adapter
 
 public class TimelineActivity extends AppCompatActivity {
 
+    private static final String PERS_TASK = "de.hackforhumans.refugeetimeline.activity.Timeline.Persist.Task";
+
     private static final int REQ_CHOOSE_GOAL = 1;
 
     private int goalTaskId = -1;
@@ -22,15 +24,16 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         this.setContentView(R.layout.timeline_activity);
-
         this.timelineRecyclerView = (RecyclerView) this.findViewById(R.id.timeline_timelineRecyler);
-
         this.timelineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        refresh(5);
+
+        if (savedInstanceState == null) {
+            refresh(5);
+        } else {
+            refresh(savedInstanceState.getInt(PERS_TASK, -1));
+        }
     }
 
     public void onStart() {
@@ -50,7 +53,8 @@ public class TimelineActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.menu_timeline_chooseGoal) {
             Intent chooseIntent = new Intent(this, GoalChooserActivity.class);
-            startActivityForResult(chooseIntent,REQ_CHOOSE_GOAL);
+            GoalChooserActivity.fillIntent(chooseIntent, goalTaskId);
+            startActivityForResult(chooseIntent, REQ_CHOOSE_GOAL);
             return true;
         }
 
@@ -68,5 +72,11 @@ public class TimelineActivity extends AppCompatActivity {
     public void refresh(int goalTaskId) {
         this.goalTaskId = goalTaskId;
         this.timelineRecyclerView.setAdapter(new TimelineAdapter(goalTaskId));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(PERS_TASK, goalTaskId);
     }
 }

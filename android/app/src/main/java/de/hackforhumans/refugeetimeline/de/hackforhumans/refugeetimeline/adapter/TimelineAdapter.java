@@ -30,7 +30,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
     private SimpleDateFormat dateFormat;
 
     private static final int COLOR_COMPLETED = Color.argb(255, 0, 230, 10);
-    private static final int COLOR_PENDING = Color.argb(255, 200, 220, 0);
+    private static final int COLOR_PENDING = Color.argb(255, 255, 69, 0);
 
     public TimelineAdapter(Task goal) {
         timeline = new ArrayList<Task>();
@@ -62,7 +62,6 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
         View timelineItem = ((LayoutInflater) parent.getContext().getSystemService(Service.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.timeline_listitem, parent, false);
         TimelineViewHolder vh = new TimelineViewHolder(timelineItem, viewType);
-
         return vh;
     }
 
@@ -75,7 +74,6 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
             public void onClick(View v) {
                 Intent detailsIntent = new Intent(holder.itemView.getContext(), TaskDetailsActivity.class);
                 TaskDetailsActivity.buildIntent(detailsIntent, task.getID());
-
                 holder.itemView.getContext().startActivity(detailsIntent);
             }
         });

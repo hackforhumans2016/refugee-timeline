@@ -2,6 +2,7 @@ package de.hackforhumans.refugeetimeline.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,8 @@ public class GoalChooserActivity extends AppCompatActivity {
     public static final String RES_EXTRA_TASKID = "de.hackforhumans.refugeetimeline.activity.GoalChooser.ResExtra.TaskId";
     public static final String RES_EXTRA_GOALID = "de.hackforhumans.refugeetimeline.activity.GoalChooser.ResExtra.GoalId";
 
+    public static final String EXTRA_TASKID = "de.hackforhumans.refugeetimeline.activity.GoalChooser.Extra.TaskId";
+
     private Toolbar toolbar;
     private RecyclerView goalsRecycler;
 
@@ -32,8 +35,16 @@ public class GoalChooserActivity extends AppCompatActivity {
         this.goalsRecycler = (RecyclerView) findViewById(R.id.goalchooser_goals);
 
         this.setSupportActionBar(toolbar);
-        goalsRecycler.setAdapter(new GoalAdapter());
+        this.getSupportActionBar().setTitle("Choose your Goal!");
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        int firstSelectedTaskId = getIntent().getIntExtra(EXTRA_TASKID, -1);
+        goalsRecycler.setAdapter(new GoalAdapter(firstSelectedTaskId));
         goalsRecycler.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public static void fillIntent(Intent intent, int firstSelectedTaskId) {
+        intent.putExtra(EXTRA_TASKID, firstSelectedTaskId);
     }
 
     @Override

@@ -22,9 +22,17 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalViewHolder> implements
     private RecyclerView attachRecycler;
     private int selectedPos;
 
-    public GoalAdapter() {
+    public GoalAdapter(int firstSelectedId) {
         this.goals = TaskTools.loadGoalsFromDB(); // TODO
         this.selectedPos = 0;
+
+        for(int i = 0; i < goals.size(); i++) {
+            Goal g = goals.get(i);
+            if (g.getTaskID() == firstSelectedId) {
+                setSelection(i);
+                break;
+            }
+        }
     }
 
     @Override

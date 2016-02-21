@@ -1,6 +1,7 @@
 package de.hackforhumans.refugeetimeline.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +22,6 @@ public class TaskDetailsActivity extends AppCompatActivity {
     private static final String EXTRA_TASK = "de.hackforhumans.refugeetimeline.activity.TaskDetails.Extra.Task";
 
     private Toolbar toolbar;
-    private TextView nameView;
     private WebView descriptionView;
 
     private TaskDetailsDoneDialog doneDialog;
@@ -33,11 +33,10 @@ public class TaskDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_taskdetails);
 
         this.toolbar = (Toolbar) findViewById(R.id.taskdetails_toolbar);
-        this.nameView = (TextView) findViewById(R.id.taskdetails_name);
         this.descriptionView = (WebView) findViewById(R.id.taskdetails_description);
 
         this.setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitleTextColor(Color.WHITE);
 
         loadTask(getIntent().getIntExtra(EXTRA_TASK, 1));
     }
@@ -48,7 +47,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
 
     public void show(Task task) {
 
-        this.nameView.setText(task.getName());
+        getSupportActionBar().setTitle(task.getName());
         this.descriptionView.loadData(task.getDescription(), "text/html", null);
 
         if(task.getFixed().size() != 0) {
