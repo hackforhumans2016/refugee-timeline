@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/dialog_taskdetails_done_duration_root"
+    style="@style/Container">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dialog_taskdetails_done_duration_startedRow">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Started?"
+            android:id="@+id/dialog_taskdetails_done_duration_startedCheck"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:layout_gravity="center_vertical|left" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="&lt; Done-Date >"
+            android:id="@+id/dialog_taskdetails_done_duration_startedDate"
+            android:layout_gravity="center_horizontal" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dialog_taskdetails_done_duration_finishedRow">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_taskdetails_done_duration_finishedCheck"
+            android:layout_gravity="center_vertical|left"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:text="Finished?" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="&lt; Done-Date >"
+            android:id="@+id/dialog_taskdetails_done_duration_finishedDate"
+            android:layout_gravity="center_horizontal" />
+    </TableRow>
+</TableLayout>

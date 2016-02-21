@@ -65,6 +65,7 @@ public class TaskTools {
                 e.printStackTrace();
             }
         }
+        timePointC.close();
 
         int predecessor = taskC.isNull(taskC.getColumnIndex(TaskGraphContract.Task.Predecessor)) ? -1 : taskC.getInt(taskC.getColumnIndex(TaskGraphContract.Task.Predecessor));
 
@@ -74,7 +75,7 @@ public class TaskTools {
     public static ArrayList<Goal> loadGoalsFromDB() {
 
         ArrayList<Goal> goals = new ArrayList<Goal>();
-        Cursor timePointC = RefugeeTimeline.getInstance().getTimelineDB().query(
+        Cursor goalC = RefugeeTimeline.getInstance().getTimelineDB().query(
                 TaskGraphContract.Goal._NAME,
                 null,
                 null,
@@ -84,18 +85,19 @@ public class TaskTools {
                 null,
                 null
         );
-        while (!timePointC.isLast() && timePointC.getCount() != 0) {
-            timePointC.moveToNext();
+        while (!goalC.isLast() && goalC.getCount() != 0) {
+            goalC.moveToNext();
             try {
-                int id = timePointC.getInt(timePointC.getColumnIndex(TaskGraphContract.Goal.ID));
-                String name = timePointC.getString(timePointC.getColumnIndex(TaskGraphContract.Goal.Name));
-                int refer = timePointC.getInt(timePointC.getColumnIndex(TaskGraphContract.Goal.TaskRef));
+                int id = goalC.getInt(goalC.getColumnIndex(TaskGraphContract.Goal.ID));
+                String name = goalC.getString(goalC.getColumnIndex(TaskGraphContract.Goal.Name));
+                int refer = goalC.getInt(goalC.getColumnIndex(TaskGraphContract.Goal.TaskRef));
 
                 goals.add(new Goal(id,name,refer));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        goalC.close();
         return goals;
     }
 
