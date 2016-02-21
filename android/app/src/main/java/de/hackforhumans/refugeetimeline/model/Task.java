@@ -13,15 +13,20 @@ public class Task {
 	
 	private int duration;
 	private SortedSet<Date> fixed;
+
+	private Date started;
+	private Date finished;
 	
 	private Date date;
 	
-	public Task(int p_id, String p_name, String p_description, int p_conditions, int p_duration, SortedSet<Date> p_fixed){
+	public Task(int p_id, String p_name, String p_description, int p_conditions, int p_duration, SortedSet<Date> p_fixed, Date p_started, Date p_finished){
 		id = p_id;
 		name = p_name;
 		description = p_description;
 		predecessor = p_conditions;
 		duration = p_duration;
+		started = p_started;
+		finished = p_finished;
 		
 		if(p_fixed == null){
 			fixed = new TreeSet<Date>();
@@ -99,6 +104,14 @@ public class Task {
 	
 	public void setDate(Date p_date) {
 		date = p_date;
+	}
+
+	public Date getStarted() {
+		return started;
+	}
+
+	public Date getFinished() {
+		return finished;
 	}
 
 	@Override

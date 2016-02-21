@@ -13,6 +13,8 @@ public class TaskGraphContract {
         public String CityRef = "city_id";
         public String StateRef = "state_id";
         public String Predecessor = "task_id_predecessor";
+        public String Started = "started";
+        public String Finished = "finished";
 
         public String _ID = ID;
         public String _NAME = "task";

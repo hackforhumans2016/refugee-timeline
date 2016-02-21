@@ -1,5 +1,6 @@
 package de.hackforhumans.refugeetimeline.model;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -45,6 +46,18 @@ public class TaskTools {
         String desc = taskC.getString(taskC.getColumnIndex(TaskGraphContract.Task.Description));
         int duration = taskC.getInt(taskC.getColumnIndex(TaskGraphContract.Task.Duration));
 
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date started = null;
+        Date finished = null;
+
+        try{
+            started = format.parse(taskC.getString(taskC.getColumnIndex(TaskGraphContract.Task.Started)));
+            finished = format.parse(taskC.getString(taskC.getColumnIndex(TaskGraphContract.Task.Finished)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         SortedSet<Date> fixedDates = new TreeSet<>();
         Cursor timePointC = RefugeeTimeline.getInstance().getTimelineDB().query(
                 TaskGraphContract.TaskDate._NAME,
@@ -56,7 +69,7 @@ public class TaskTools {
                 null,
                 null
         );
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
         while (!timePointC.isLast() && timePointC.getCount() != 0) {
             timePointC.moveToNext();
             try {
@@ -69,7 +82,7 @@ public class TaskTools {
 
         int predecessor = taskC.isNull(taskC.getColumnIndex(TaskGraphContract.Task.Predecessor)) ? -1 : taskC.getInt(taskC.getColumnIndex(TaskGraphContract.Task.Predecessor));
 
-        return new Task(id, name, desc, predecessor, duration, fixedDates);
+        return new Task(id, name, desc, predecessor, duration, fixedDates, started, finished);
     }
 
     public static ArrayList<Goal> loadGoalsFromDB() {
@@ -100,6 +113,19 @@ public class TaskTools {
         goalC.close();
         return goals;
     }
+
+    public static Boolean updateTaskInDB(Task task) {
+
+        ContentValues values = new ContentValues();
+        values.put(TaskGraphContract.Task.Started, String.valueOf(task.getStarted()));
+        values.put(TaskGraphContract.Task.Finished, String.valueOf(task.getFinished()));
+
+        RefugeeTimeline.getInstance().getTimelineDB().update(TaskGraphContract.Task._NAME, values, TaskGraphContract.Task.ID + " = ?", new String[]{String.valueOf(task.getID())});
+
+        return true;
+    }
+
+
 
 
 
