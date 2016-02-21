@@ -11,12 +11,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import de.hackforhumans.refugeetimeline.R;
+
 /**
  * Created by jan-niklas on 21.02.16.
  */
 public class DateEditTextPlugin {
 
-    private static final int TAG_DATE = 873534;
+    private static final int TAG_DATE = R.id.tag_date;
 
     private DatePickerDialog dialog;
     private TextView textView;
@@ -40,12 +42,14 @@ public class DateEditTextPlugin {
 
         this.textView.setOnClickListener(new OnTextViewClickListener());
         this.textView.setTag(TAG_DATE, initial);
+        //reset();
     }
 
     public void reset() {
         Date taggedDate = (Date) textView.getTag(TAG_DATE);
         if (taggedDate != null) {
             textView.setText(dateFormat.format(taggedDate));
+            fireDateSet(taggedDate);
         }
     }
 
@@ -55,7 +59,7 @@ public class DateEditTextPlugin {
         @Override
         public void onClick(View v) {
 
-            if (v != textView || !v.isClickable()) return;
+            if (v != textView || !v.isEnabled()) return;
 
             try {
                 cal.setTime(dateFormat.parse(((TextView) v).getText().toString()));

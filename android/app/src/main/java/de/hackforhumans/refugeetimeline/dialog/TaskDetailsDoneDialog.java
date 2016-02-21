@@ -1,8 +1,10 @@
 package de.hackforhumans.refugeetimeline.dialog;
 
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import de.hackforhumans.refugeetimeline.activity.TaskDetailsActivity;
 import de.hackforhumans.refugeetimeline.model.Task;
 import de.hackforhumans.refugeetimeline.model.TaskTools;
 
@@ -27,11 +29,19 @@ public class TaskDetailsDoneDialog extends DialogFragment {
         dialog.setArguments(args);
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onCancel(dialog);
+
+        writeToDatabase();
+        ((TaskDetailsActivity) getActivity()).loadTask(getAssociatedTask().getID());
+    }
+
     public Task getAssociatedTask() {
         return associatedTask;
     }
 
     public void writeToDatabase() {
-        // TODO save to database
+        TaskTools.updateTaskInDB(associatedTask);
     }
 }

@@ -2,6 +2,8 @@ package de.hackforhumans.refugeetimeline.de.hackforhumans.refugeetimeline.adapte
 
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import de.hackforhumans.refugeetimeline.R;
+import de.hackforhumans.refugeetimeline.RefugeeTimeline;
 import de.hackforhumans.refugeetimeline.model.Task;
 import de.hackforhumans.refugeetimeline.model.TaskTools;
 import de.hackforhumans.refugeetimeline.activity.TaskDetailsActivity;
@@ -25,6 +28,9 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
 
     private ArrayList<Task> timeline;
     private SimpleDateFormat dateFormat;
+
+    private static final int COLOR_COMPLETED = Color.argb(255, 0, 230, 10);
+    private static final int COLOR_PENDING = Color.argb(255, 200, 220, 0);
 
     public TimelineAdapter(Task goal) {
         timeline = new ArrayList<Task>();
@@ -73,6 +79,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
                 holder.itemView.getContext().startActivity(detailsIntent);
             }
         });
+        holder.timelineView.setMarker(new ColorDrawable(task.isCompleted() ? COLOR_COMPLETED : COLOR_PENDING));
     }
 
     @Override

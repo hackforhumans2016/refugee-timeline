@@ -106,13 +106,19 @@ public class Task {
 		date = p_date;
 	}
 
+	public void setStarted(Date date) { this.started = date; }
 	public Date getStarted() {
 		return started;
 	}
 
+	public void setFinished(Date date) { this.finished = date; }
 	public Date getFinished() {
 		return finished;
 	}
+
+    public boolean isCompleted() {
+        return fixed.size() > 0 ? started != null : finished != null;
+    }
 
 	@Override
 	public String toString() {

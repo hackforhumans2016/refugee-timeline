@@ -16,6 +16,8 @@ public class TimelineActivity extends AppCompatActivity {
 
     private static final int REQ_CHOOSE_GOAL = 1;
 
+    private int goalTaskId = -1;
+
     private RecyclerView timelineRecyclerView;
 
     @Override
@@ -28,11 +30,12 @@ public class TimelineActivity extends AppCompatActivity {
         this.timelineRecyclerView = (RecyclerView) this.findViewById(R.id.timeline_timelineRecyler);
 
         this.timelineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        this.timelineRecyclerView.setAdapter(new TimelineAdapter(5));
+        refresh(5);
     }
 
     public void onStart() {
         super.onStart();
+        if (goalTaskId > 0) refresh(goalTaskId);
     }
 
     @Override
@@ -58,7 +61,12 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == REQ_CHOOSE_GOAL && resultCode == Activity.RESULT_OK) {
-            this.timelineRecyclerView.setAdapter(new TimelineAdapter(data.getIntExtra(GoalChooserActivity.RES_EXTRA_TASKID, 1)));
+            refresh(data.getIntExtra(GoalChooserActivity.RES_EXTRA_TASKID, 1));
         }
+    }
+
+    public void refresh(int goalTaskId) {
+        this.goalTaskId = goalTaskId;
+        this.timelineRecyclerView.setAdapter(new TimelineAdapter(goalTaskId));
     }
 }

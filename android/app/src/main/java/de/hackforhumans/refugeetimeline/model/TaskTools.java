@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.sql.Ref;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,9 +21,12 @@ import de.hackforhumans.refugeetimeline.model.Goal;
  */
 public class TaskTools {
 
+    private  static final SimpleDateFormat DB_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+
     public static Task loadFromDB(int taskId) {
 
-        Cursor taskC = RefugeeTimeline.getInstance().getTimelineDB().query(
+        SQLiteDatabase db = RefugeeTimeline.getInstance().getTimelineDB();
+        Cursor taskC = db.query(
                 TaskGraphContract.Task._NAME,
                 null,
                 TaskGraphContract.Task._ID + " = ?",
@@ -34,32 +38,35 @@ public class TaskTools {
         );
 
         taskC.moveToNext();
-        Task result = loadFromDBRow(taskC);
+        Task result = loadFromDBRow(db, taskC);
         taskC.close();
+        db.close();
         return result;
     }
 
-    private static Task loadFromDBRow(Cursor taskC) {
+    private static Task loadFromDBRow(SQLiteDatabase db, Cursor taskC) {
 
         int id = taskC.getInt(taskC.getColumnIndex(TaskGraphContract.Task._ID));
         String name = taskC.getString(taskC.getColumnIndex(TaskGraphContract.Task.Name));
         String desc = taskC.getString(taskC.getColumnIndex(TaskGraphContract.Task.Description));
         int duration = taskC.getInt(taskC.getColumnIndex(TaskGraphContract.Task.Duration));
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
         Date started = null;
         Date finished = null;
 
         try{
-            started = format.parse(taskC.getString(taskC.getColumnIndex(TaskGraphContract.Task.Started)));
-            finished = format.parse(taskC.getString(taskC.getColumnIndex(TaskGraphContract.Task.Finished)));
+            if (!taskC.isNull(taskC.getColumnIndex(TaskGraphContract.Task.Started))) {
+                started = DB_DATE_FORMAT.parse(taskC.getString(taskC.getColumnIndex(TaskGraphContract.Task.Started)));
+            }
+            if (!taskC.isNull(taskC.getColumnIndex((TaskGraphContract.Task.Finished)))) {
+                finished = DB_DATE_FORMAT.parse(taskC.getString(taskC.getColumnIndex(TaskGraphContract.Task.Finished)));
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         SortedSet<Date> fixedDates = new TreeSet<>();
-        Cursor timePointC = RefugeeTimeline.getInstance().getTimelineDB().query(
+        Cursor timePointC = db.query(
                 TaskGraphContract.TaskDate._NAME,
                 null,
                 TaskGraphContract.TaskDate.TaskRef + " = ?",
@@ -73,7 +80,7 @@ public class TaskTools {
         while (!timePointC.isLast() && timePointC.getCount() != 0) {
             timePointC.moveToNext();
             try {
-                fixedDates.add(format.parse(timePointC.getString(timePointC.getColumnIndex(TaskGraphContract.TaskDate.Date))));
+                fixedDates.add(DB_DATE_FORMAT.parse(timePointC.getString(timePointC.getColumnIndex(TaskGraphContract.TaskDate.Date))));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -117,10 +124,20 @@ public class TaskTools {
     public static Boolean updateTaskInDB(Task task) {
 
         ContentValues values = new ContentValues();
-        values.put(TaskGraphContract.Task.Started, String.valueOf(task.getStarted()));
-        values.put(TaskGraphContract.Task.Finished, String.valueOf(task.getFinished()));
+        if (task.getStarted() != null) {
+            values.put(TaskGraphContract.Task.Started, DB_DATE_FORMAT.format(task.getStarted()));
+        } else {
+            values.putNull(TaskGraphContract.Task.Started);
+        }
+        if (task.getFinished() != null) {
+            values.put(TaskGraphContract.Task.Finished, DB_DATE_FORMAT.format(task.getFinished()));
+        } else {
+            values.putNull(TaskGraphContract.Task.Finished);
+        }
 
-        RefugeeTimeline.getInstance().getTimelineDB().update(TaskGraphContract.Task._NAME, values, TaskGraphContract.Task.ID + " = ?", new String[]{String.valueOf(task.getID())});
+        SQLiteDatabase db = RefugeeTimeline.getInstance().getTimelineDB();
+        db.update(TaskGraphContract.Task._NAME, values, TaskGraphContract.Task.ID + " = ?", new String[]{String.valueOf(task.getID())});
+        db.close();
 
         return true;
     }

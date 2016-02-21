@@ -38,8 +38,18 @@ public class TaskDetailsFixedDateDoneDialog extends TaskDetailsDoneDialog
         this.doneCheckBox = (CheckBox) layoutView.findViewById(R.id.dialog_taskdetails_done_fixeddate_donecheck);
         this.doneDateView = (EditText) layoutView.findViewById(R.id.dialog_taskdetails_done_fixeddate_donedate);
 
-        this.doneDatePlugin = new DateEditTextPlugin(doneDateView, new Date(), DateFormat.getDateInstance(), this);
+        doneCheckBox.setChecked(true);
+        Date initial = getAssociatedTask().getStarted();
+        if (initial == null) {
+            initial = new Date();
+            doneCheckBox.setChecked(false);
+            doneDateView.setEnabled(false);
+        }
+        this.doneDatePlugin = new DateEditTextPlugin(doneDateView, initial, DateFormat.getDateInstance(), this);
+        doneDatePlugin.reset();
         this.doneCheckBox.setOnCheckedChangeListener(this);
+
+
 
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Task completion status")
@@ -51,7 +61,16 @@ public class TaskDetailsFixedDateDoneDialog extends TaskDetailsDoneDialog
     @Override
     public void onDateSet(TextView view, Date date) {
 
-        writeToDatabase();
+        getAssociatedTask().setStarted(date);
+    }
+
+    @Override
+    public void writeToDatabase() {
+        if (!doneCheckBox.isChecked()) {
+            getAssociatedTask().setStarted(null);
+        }
+
+        super.writeToDatabase();
     }
 
     @Override
@@ -60,9 +79,9 @@ public class TaskDetailsFixedDateDoneDialog extends TaskDetailsDoneDialog
 
         if (!isChecked) {
             doneDateView.setText("Not done yet");
-            doneDateView.setClickable(false);
+            doneDateView.setEnabled(false);
         } else {
-            doneDateView.setClickable(true);
+            doneDateView.setEnabled(true);
             doneDatePlugin.reset();
         }
     }
