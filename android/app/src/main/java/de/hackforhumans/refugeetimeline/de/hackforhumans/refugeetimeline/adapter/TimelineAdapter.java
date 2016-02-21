@@ -56,7 +56,6 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
         View timelineItem = ((LayoutInflater) parent.getContext().getSystemService(Service.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.timeline_listitem, parent, false);
         TimelineViewHolder vh = new TimelineViewHolder(timelineItem, viewType);
-
         return vh;
     }
 
@@ -69,7 +68,6 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
             public void onClick(View v) {
                 Intent detailsIntent = new Intent(holder.itemView.getContext(), TaskDetailsActivity.class);
                 TaskDetailsActivity.buildIntent(detailsIntent, task.getID());
-
                 holder.itemView.getContext().startActivity(detailsIntent);
             }
         });

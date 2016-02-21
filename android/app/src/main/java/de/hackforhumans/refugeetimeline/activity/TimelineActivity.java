@@ -20,13 +20,9 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         this.setContentView(R.layout.timeline_activity);
-
         this.timelineRecyclerView = (RecyclerView) this.findViewById(R.id.timeline_timelineRecyler);
-
         this.timelineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.timelineRecyclerView.setAdapter(new TimelineAdapter(5));
     }
