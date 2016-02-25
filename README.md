@@ -1,5 +1,7 @@
 # Refugee Timeline
 
+see also information on [Launchrock](http://refugee-timeline.launchrock.com)
+
 This project was initiated during the 2016 HackForHumans hackathon in Osnabrück. It was created to provide assistance for refugees by showing the necessary steps to reach so-called goals, like for example to achieve a residence permission or continue studies. The information is shown as a timeline, which is generated based on the selected goal and personal information.
 
 There is an android application under development, but currently it is a very basic prototype and not nearly finished for release yet.
